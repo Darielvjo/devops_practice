@@ -3,10 +3,10 @@ name: CI Workflow
 on:
   push:
     branches:
-      - main  # Cambia esto si estás usando una rama diferente
+      - main  # Cambia a la rama que estás usando si es diferente
   pull_request:
     branches:
-      - main  # Cambia esto si estás usando una rama diferente
+      - main  # Cambia a la rama que estás usando si es diferente
 
 jobs:
   test:
@@ -17,16 +17,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      # Paso 2: Configurar el entorno de Node.js (si usas Node.js para las pruebas)
+      # Paso 2: Configurar Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Cambia a la versión de Node.js que necesites
+          node-version: '16'  # Cambia la versión si es necesario
 
-      # Paso 3: Instalar dependencias
+      # Paso 3: Instalar dependencias (con permisos)
       - name: Install dependencies
-        run: npm install  # Asegúrate de tener un package.json con las dependencias necesarias
+        run: |
+          npm install
+          chmod +x ./node_modules/.bin/jest  # Otorgar permisos de ejecución
 
       # Paso 4: Ejecutar las pruebas unitarias
       - name: Run unit tests
-        run: npm test  # Asumiendo que tienes un script 'test' en el package.json
+        run: npm test  # Este comando ejecuta Jest
