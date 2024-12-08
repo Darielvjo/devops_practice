@@ -1,0 +1,32 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto si estás usando una rama diferente
+  pull_request:
+    branches:
+      - main  # Cambia esto si estás usando una rama diferente
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Check out el código del repositorio
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar el entorno de Node.js (si usas Node.js para las pruebas)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Cambia a la versión de Node.js que necesites
+
+      # Paso 3: Instalar dependencias
+      - name: Install dependencies
+        run: npm install  # Asegúrate de tener un package.json con las dependencias necesarias
+
+      # Paso 4: Ejecutar las pruebas unitarias
+      - name: Run unit tests
+        run: npm test  # Asumiendo que tienes un script 'test' en el package.json
